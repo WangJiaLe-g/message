@@ -1,0 +1,222 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jc.message.server.mapper.MessageMapper">
+  <resultMap id="BaseResultMap" type="com.jc.message.server.entity.DO.MessageDO">
+    <!--@mbg.generated-->
+    <!--@Table jc_message.message-->
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="type" jdbcType="INTEGER" property="type" />
+    <result column="detail" jdbcType="VARCHAR" property="detail" />
+    <result column="user_ids" jdbcType="VARCHAR" property="userIds" />
+    <result column="terminal_type" jdbcType="VARCHAR" property="terminalType" />
+    <result column="read_type" jdbcType="INTEGER" property="readType" />
+    <result column="expiration_time" jdbcType="TIMESTAMP" property="expirationTime" />
+    <result column="is_read" jdbcType="INTEGER" property="isRead" />
+    <result column="template_id" jdbcType="INTEGER" property="templateId" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    <!--@mbg.generated-->
+    id, `type`, detail, user_ids, terminal_type, read_type, expiration_time, is_read, 
+    template_id
+  </sql>
+  <update id="updateBatch" parameterType="java.util.List">
+    <!--@mbg.generated-->
+    update jc_message.message
+    <trim prefix="set" suffixOverrides=",">
+      <trim prefix="`type` = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          when id = #{item.id,jdbcType=BIGINT} then #{item.type,jdbcType=INTEGER}
+        </foreach>
+      </trim>
+      <trim prefix="detail = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          when id = #{item.id,jdbcType=BIGINT} then #{item.detail,jdbcType=VARCHAR}
+        </foreach>
+      </trim>
+      <trim prefix="user_ids = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          when id = #{item.id,jdbcType=BIGINT} then #{item.userIds,jdbcType=VARCHAR}
+        </foreach>
+      </trim>
+      <trim prefix="terminal_type = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          when id = #{item.id,jdbcType=BIGINT} then #{item.terminalType,jdbcType=VARCHAR}
+        </foreach>
+      </trim>
+      <trim prefix="read_type = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          when id = #{item.id,jdbcType=BIGINT} then #{item.readType,jdbcType=INTEGER}
+        </foreach>
+      </trim>
+      <trim prefix="expiration_time = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          when id = #{item.id,jdbcType=BIGINT} then #{item.expirationTime,jdbcType=TIMESTAMP}
+        </foreach>
+      </trim>
+      <trim prefix="is_read = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          when id = #{item.id,jdbcType=BIGINT} then #{item.isRead,jdbcType=INTEGER}
+        </foreach>
+      </trim>
+      <trim prefix="template_id = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          when id = #{item.id,jdbcType=BIGINT} then #{item.templateId,jdbcType=INTEGER}
+        </foreach>
+      </trim>
+    </trim>
+    where id in
+    <foreach close=")" collection="list" item="item" open="(" separator=", ">
+      #{item.id,jdbcType=BIGINT}
+    </foreach>
+  </update>
+  <insert id="batchInsert" keyColumn="id" keyProperty="id" parameterType="map" useGeneratedKeys="true">
+    <!--@mbg.generated-->
+    insert into jc_message.message
+    (`type`, detail, user_ids, terminal_type, read_type, expiration_time, is_read, template_id
+      )
+    values
+    <foreach collection="list" item="item" separator=",">
+      (#{item.type,jdbcType=INTEGER}, #{item.detail,jdbcType=VARCHAR}, #{item.userIds,jdbcType=VARCHAR}, 
+        #{item.terminalType,jdbcType=VARCHAR}, #{item.readType,jdbcType=INTEGER}, #{item.expirationTime,jdbcType=TIMESTAMP}, 
+        #{item.isRead,jdbcType=INTEGER}, #{item.templateId,jdbcType=INTEGER})
+    </foreach>
+  </insert>
+  <insert id="insertOrUpdate" keyColumn="id" keyProperty="id" parameterType="com.jc.message.server.entity.DO.MessageDO" useGeneratedKeys="true">
+    <!--@mbg.generated-->
+    insert into jc_message.message
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      `type`,
+      detail,
+      user_ids,
+      terminal_type,
+      read_type,
+      expiration_time,
+      is_read,
+      template_id,
+    </trim>
+    values
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      #{type,jdbcType=INTEGER},
+      #{detail,jdbcType=VARCHAR},
+      #{userIds,jdbcType=VARCHAR},
+      #{terminalType,jdbcType=VARCHAR},
+      #{readType,jdbcType=INTEGER},
+      #{expirationTime,jdbcType=TIMESTAMP},
+      #{isRead,jdbcType=INTEGER},
+      #{templateId,jdbcType=INTEGER},
+    </trim>
+    on duplicate key update 
+    <trim suffixOverrides=",">
+      <if test="id != null">
+        id = #{id,jdbcType=BIGINT},
+      </if>
+      `type` = #{type,jdbcType=INTEGER},
+      detail = #{detail,jdbcType=VARCHAR},
+      user_ids = #{userIds,jdbcType=VARCHAR},
+      terminal_type = #{terminalType,jdbcType=VARCHAR},
+      read_type = #{readType,jdbcType=INTEGER},
+      expiration_time = #{expirationTime,jdbcType=TIMESTAMP},
+      is_read = #{isRead,jdbcType=INTEGER},
+      template_id = #{templateId,jdbcType=INTEGER},
+    </trim>
+  </insert>
+  <insert id="insertOrUpdateSelective" keyColumn="id" keyProperty="id" parameterType="com.jc.message.server.entity.DO.MessageDO" useGeneratedKeys="true">
+    <!--@mbg.generated-->
+    insert into jc_message.message
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="type != null">
+        `type`,
+      </if>
+      <if test="detail != null">
+        detail,
+      </if>
+      <if test="userIds != null">
+        user_ids,
+      </if>
+      <if test="terminalType != null">
+        terminal_type,
+      </if>
+      <if test="readType != null">
+        read_type,
+      </if>
+      <if test="expirationTime != null">
+        expiration_time,
+      </if>
+      <if test="isRead != null">
+        is_read,
+      </if>
+      <if test="templateId != null">
+        template_id,
+      </if>
+    </trim>
+    values
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="type != null">
+        #{type,jdbcType=INTEGER},
+      </if>
+      <if test="detail != null">
+        #{detail,jdbcType=VARCHAR},
+      </if>
+      <if test="userIds != null">
+        #{userIds,jdbcType=VARCHAR},
+      </if>
+      <if test="terminalType != null">
+        #{terminalType,jdbcType=VARCHAR},
+      </if>
+      <if test="readType != null">
+        #{readType,jdbcType=INTEGER},
+      </if>
+      <if test="expirationTime != null">
+        #{expirationTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="isRead != null">
+        #{isRead,jdbcType=INTEGER},
+      </if>
+      <if test="templateId != null">
+        #{templateId,jdbcType=INTEGER},
+      </if>
+    </trim>
+    on duplicate key update 
+    <trim suffixOverrides=",">
+      <if test="id != null">
+        id = #{id,jdbcType=BIGINT},
+      </if>
+      <if test="type != null">
+        `type` = #{type,jdbcType=INTEGER},
+      </if>
+      <if test="detail != null">
+        detail = #{detail,jdbcType=VARCHAR},
+      </if>
+      <if test="userIds != null">
+        user_ids = #{userIds,jdbcType=VARCHAR},
+      </if>
+      <if test="terminalType != null">
+        terminal_type = #{terminalType,jdbcType=VARCHAR},
+      </if>
+      <if test="readType != null">
+        read_type = #{readType,jdbcType=INTEGER},
+      </if>
+      <if test="expirationTime != null">
+        expiration_time = #{expirationTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="isRead != null">
+        is_read = #{isRead,jdbcType=INTEGER},
+      </if>
+      <if test="templateId != null">
+        template_id = #{templateId,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+</mapper>
